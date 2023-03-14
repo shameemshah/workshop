@@ -6,3 +6,4 @@ else
     echo "An error occurred. Please connect with your workshop moderator."
 fi
 
+
