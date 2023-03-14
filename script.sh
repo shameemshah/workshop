@@ -85,7 +85,7 @@ function day1(){
     else
         err "0503"
     fi
-    download_asset 1 "https://drive.google.com/uc?id=1F1GCKXr66umakIrnnKHYcE-5-fSKJyXG" "day-2.zip"
+    download_asset 1 "https://drive.google.com/uc?id=1F1GCKXr66umakIrnnKHYcE-5-fSKJyXG" "day-1.zip"
 }
 
 validate
