@@ -76,7 +76,17 @@ function download_asset(){
 
 function day1(){
     # Run docker pull commands and check for success
-    log "Pulling required images for the workshop"
+    log "Downloading the necessary images for the workshop, Please wait..."
+    # Check if Docker daemon is running
+    if [ "$(uname)" == "Darwin" ]; then
+      if ! docker info &> /dev/null; then
+        log "Docker daemon is not running. Starting Docker daemon..."
+        open /Applications/Docker.app
+        while ! docker info &> /dev/null; do
+            sleep 1
+        done
+      fi
+    fi
     if sudo docker pull golang:1.19-alpine3.17  &> /dev/null && sudo docker pull alpine:3.17  &> /dev/null ; then
         log "Validating the docker images"
         sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='golang:1.19-alpine3.17' --filter=reference='alpine:3.17'
