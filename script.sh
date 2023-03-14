@@ -66,9 +66,8 @@ function download_asset(){
   mkdir -p ~/Desktop/devops_workshop
   cd ~/Desktop/devops_workshop
   # download the file using curl
-  echo "Downloading file from Google Drive..."
-  # curl -c ./cookie -s -L "$DOWNLOAD_URL" > /dev/null
-  log "Download Day $day assets" 
+  
+  log "Downloading Day $day assets" 
   curl -L "$DOWNLOAD_URL" -o "$FILENAME"  &> /dev/null
   # extract the zip archive
   unzip -o "$FILENAME" &> /dev/null
@@ -79,13 +78,15 @@ function day1(){
     # Run docker pull commands and check for success
     log "Pulling required images for the workshop"
     if sudo docker pull golang:1.19-alpine3.17  &> /dev/null && sudo docker pull alpine:3.17  &> /dev/null ; then
-        log "Validating the docker images" && echo -e "\n"
+        log "Validating the docker images"
         sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='golang:1.19-alpine3.17' --filter=reference='alpine:3.17'
-        echo -e "\n\033[32mYou are good to go for the DevOps workshop Day 1!!\033[0m\n"
+        download_asset 1 "https://drive.google.com/uc?id=1F1GCKXr66umakIrnnKHYcE-5-fSKJyXG" "day-1.zip"
+        echo -e "\n\n\033[32m >>>>>>>>> You are good to go for the DevOps workshop Day 1!!  <<<<<<<<<< \033[0m\n"
+        message=$'\n\n\e[1m\e[5m\e[38;5;33m      >>>>>>>>> Team-Devops Keyvalue Software Systems  <<<<<<<<<< \e[0m\n'
+        echo $message
     else
         err "0503"
     fi
-    download_asset 1 "https://drive.google.com/uc?id=1F1GCKXr66umakIrnnKHYcE-5-fSKJyXG" "day-1.zip"
 }
 
 validate
