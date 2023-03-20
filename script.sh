@@ -130,9 +130,9 @@ function day_2(){
       fi
     fi
     log "Please wait a little longer as the necessary images for the workshop are still being downloaded. Thank you for your patience."
-    if sudo docker pull public.ecr.aws/o9g0l5h1/k8s-workshop:v1  &> /dev/null && sudo docker pull public.ecr.aws/o9g0l5h1/k8s-workshop:v2  &> /dev/null  && sudo docker pull public.ecr.aws/o9g0l5h1/k8s-workshop:v3  &> /dev/null  && sudo docker pull kindest/node:v1.24.0  &> /dev/null; then
+    if sudo docker pull kindest/node:v1.24.0  &> /dev/null; then
         log "Validating the docker images"
-        sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='public.ecr.aws/o9g0l5h1/k8s-workshop:v1' --filter=reference='public.ecr.aws/o9g0l5h1/k8s-workshop:v2' --filter=reference='public.ecr.aws/o9g0l5h1/k8s-workshop:v3' --filter=reference='kindest/node:v1.24.0'
+        sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='kindest/node:v1.24.0'
         download_asset 2 "https://drive.google.com/uc?id=1dvtOiRx7hHd_m6K3_vbOFo9X8biJDipW" "day-2.zip"
         echo -e "\n\n\033[32m >>>>>>>>> You are good to go for the DevOps workshop Day 2!!  <<<<<<<<<< \033[0m\n"
         message=$'\n\n\e[1m\e[5m\e[38;5;33m      >>>>>>>>> Team-Devops Keyvalue Software Systems  <<<<<<<<<< \e[0m\n'
