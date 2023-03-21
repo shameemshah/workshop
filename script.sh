@@ -56,7 +56,7 @@ function validate(){
       fi
     fi
 
-    # Check if UNZIP is installed, if not, install it  
+    # Check if kind is installed, if not, install it  
     if ! which kind &>/dev/null; then
       if [ "$(uname)" == "Darwin" ]; then
         log "kind is not installed. Installing now..." >&2
@@ -90,6 +90,40 @@ function download_asset(){
   # extract the zip archive
   unzip -o "$FILENAME" &> /dev/null
   rm $FILENAME
+}
+
+have_sudo_access() {
+  if [[ ! -x "/usr/bin/sudo" ]]
+  then
+    return 1
+  fi
+
+  local -a SUDO=("/usr/bin/sudo")
+  if [[ -n "${SUDO_ASKPASS-}" ]]
+  then
+    SUDO+=("-A")
+  elif [[ -n "${NONINTERACTIVE-}" ]]
+  then
+    SUDO+=("-n")
+  fi
+
+  if [[ -z "${HAVE_SUDO_ACCESS-}" ]]
+  then
+    if [[ -n "${NONINTERACTIVE-}" ]]
+    then
+      "${SUDO[@]}" -l mkdir &>/dev/null
+    else
+      "${SUDO[@]}" -v && "${SUDO[@]}" -l mkdir &>/dev/null
+    fi
+    HAVE_SUDO_ACCESS="$?"
+  fi
+
+  if [[ -n "${HOMEBREW_ON_MACOS-}" ]] && [[ "${HAVE_SUDO_ACCESS}" -ne 0 ]]
+  then
+    abort "Need sudo access on macOS (e.g. the user ${USER} needs to be an Administrator)!"
+  fi
+
+  return "${HAVE_SUDO_ACCESS}"
 }
 
 function day_1(){
@@ -141,7 +175,7 @@ function day_2(){
         err "0503"
     fi
 }
-
+have_sudo_access
 validate
 # day_1
 day_2
