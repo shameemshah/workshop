@@ -175,7 +175,34 @@ function day_2(){
         err "0503"
     fi
 }
+
+function day_3(){
+    log "Day 3 Workshop Prerequisites Script"
+    # Check if Docker daemon is running
+    if [ "$(uname)" == "Darwin" ]; then
+      if ! docker info &> /dev/null; then
+        log "Docker daemon is not running. Starting Docker daemon..."
+        open /Applications/Docker.app
+        while ! docker info &> /dev/null; do
+            sleep 1
+        done
+      fi
+    fi
+    log "Please wait a little longer as the necessary images for the workshop are still being downloaded. Thank you for your patience."
+    if sudo docker pull golang:1.19-alpine3.17  &> /dev/null && docker pull postgres:11  &> /dev/null &&docker pull redislabs/redisearch:2.0.9  &> /dev/null ; then
+        log "Validating the docker images"
+        sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='golang:1.19-alpine3.17' --filter=reference='postgres:11' --filter=reference='redislabs/redisearch:2.0.9' 
+        download_asset 3 "https://drive.google.com/uc?id=1acWzRZXtakgcPPdHROwfGrccRFpzgUU_" "Day-3.zip"
+        echo -e "\n\n\033[32m >>>>>>>>> You are good to go for the DevOps workshop Day 2!!  <<<<<<<<<< \033[0m\n"
+        message=$'\n\n\e[1m\e[5m\e[38;5;33m      >>>>>>>>> Team-Devops Keyvalue Software Systems  <<<<<<<<<< \e[0m\n'
+        echo $message
+    else
+        err "0503"
+    fi
+}
+
 have_sudo_access
 validate
 # day_1
-day_2
+# day_2
+day_3
