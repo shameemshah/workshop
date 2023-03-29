@@ -189,7 +189,7 @@ function day_3(){
       fi
     fi
     log "Please wait a little longer as the necessary images for the workshop are still being downloaded. Thank you for your patience."
-    if sudo docker pull golang:1.19-alpine3.17  &> /dev/null && docker pull postgres:11  &> /dev/null &&docker pull redislabs/redisearch:2.0.9  &> /dev/null ; then
+    if sudo docker pull golang:1.19-alpine3.17  &> /dev/null && sudo docker pull postgres:11  &> /dev/null && sudo docker pull redislabs/redisearch:2.0.9  &> /dev/null ; then
         log "Validating the docker images"
         sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='golang:1.19-alpine3.17' --filter=reference='postgres:11' --filter=reference='redislabs/redisearch:2.0.9' 
         download_asset 3 "https://drive.google.com/uc?id=1acWzRZXtakgcPPdHROwfGrccRFpzgUU_" "Day-3.zip"
