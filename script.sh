@@ -193,7 +193,7 @@ function day_3(){
         log "Validating the docker images"
         sudo docker images --format "{{.Repository}}:{{.Tag}}" --filter=reference='golang:1.19-alpine3.17' --filter=reference='postgres:11' --filter=reference='redislabs/redisearch:2.0.9' 
         download_asset 3 "https://drive.google.com/uc?id=1acWzRZXtakgcPPdHROwfGrccRFpzgUU_" "Day-3.zip"
-        echo -e "\n\n\033[32m >>>>>>>>> You are good to go for the DevOps workshop Day 2!!  <<<<<<<<<< \033[0m\n"
+        echo -e "\n\n\033[32m >>>>>>>>> You are good to go for the DevOps workshop Day 3!!  <<<<<<<<<< \033[0m\n"
         message=$'\n\n\e[1m\e[5m\e[38;5;33m      >>>>>>>>> Team-Devops Keyvalue Software Systems  <<<<<<<<<< \e[0m\n'
         echo $message
     else
