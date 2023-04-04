@@ -203,6 +203,6 @@ function day_3(){
 
 have_sudo_access
 validate
-# day_1
-# day_2
+day_1
+day_2
 day_3
